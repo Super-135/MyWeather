@@ -92,6 +92,7 @@ public class FragmentMain extends Fragment {
                             urlConnection.disconnect();
                         }
                     }
+
                 }
             }).start();
         } catch (MalformedURLException e) {
