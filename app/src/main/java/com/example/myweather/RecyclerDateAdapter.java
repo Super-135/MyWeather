@@ -51,6 +51,8 @@ public class RecyclerDateAdapter extends RecyclerView.Adapter<RecyclerDateAdapte
         private TextView tvDay;
         private TextView tvTemperature;
         private ImageView ivDay;
+        private String temp;
+
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -63,7 +65,11 @@ public class RecyclerDateAdapter extends RecyclerView.Adapter<RecyclerDateAdapte
             @SuppressLint("SimpleDateFormat")
             String date = new java.text.SimpleDateFormat("dd MMMM").format(new java.util.Date (daily.getDt()*1000));
             tvDay.setText(date);
-            String temp = String.format(Locale.getDefault(), "+%.0f", daily.getTemp().getDay());
+            if (daily.getTemp().getDay() >= 0) {
+                temp = '+' + String.format(Locale.getDefault(), "%.0f", daily.getTemp().getDay());
+            } else {
+                temp = String.format(Locale.getDefault(), "%.0f", daily.getTemp().getDay());
+            }
             tvTemperature.setText(temp);
             String icon = daily.getWeather()[0].getIcon();
             if (icon.equals("01d") || icon.equals("01n")) {
