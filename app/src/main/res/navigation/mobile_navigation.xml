@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.myweather.ui.home.FragmentMain"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/nav_forecast_for_the_week"
+        android:name="com.example.myweather.ui.gallery.FragmentWeatherForWeek"
+        android:label="@string/menu_forecast_for_the_week"
+        tools:layout="@layout/fragment_weather_for_week" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.myweather.ui.slideshow.SettingsActivity$SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/settings_activity" />
+
+    <fragment
+        android:id="@+id/nav_about_the_developer"
+        android:name="com.example.myweather.AboutTheDeveloper"
+        android:label="@string/menu_about_the_developer"
+        tools:layout="@layout/fragment_about_the_developer" />
+</navigation>
