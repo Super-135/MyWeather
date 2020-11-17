@@ -83,7 +83,7 @@ public class WeatherRequestForView {
     private String icon;
 
     public WeatherRequestForView(WeatherRequest weatherRequest, Context context) {
-        this.temperatureStr  = String.format(Locale.getDefault(), "+%.0f", weatherRequest.getMain().getTemp());
+        this.temperatureStr  = String.format(Locale.getDefault(), "%+.0f", weatherRequest.getMain().getTemp());
         this.temperatureF  = weatherRequest.getMain().getTemp();
         this.city = weatherRequest.getName();
         this.weather = weatherRequest.getWeather()[0].getDescription();
