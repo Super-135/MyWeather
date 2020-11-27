@@ -1,16 +1,29 @@
 package com.example.myweather;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.myweather.Messages.NetworkStatus;
 import com.example.myweather.ui.slideshow.SettingsActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private NavController navController;
+    private BroadcastReceiver networkStatusReceiver = new NetworkStatus();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,48 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         findView();
         setSettings();
+        initGetToken();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBroadcastMessages();
+    }
+
+    private void initGetToken() {
+//        final EditText textToken = findViewById(R.id.textToken);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("PushMessage", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+//                        textToken.setText(token);
+                    }
+                });
+    }
+    private void setBroadcastMessages() {
+        registerReceiver(networkStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
+ //       registerReceiver(networkStatusReceiver, new IntentFilter(Intent.ACTION_POWER_CONNECTED));
+//        registerReceiver(networkStatusReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        initNotificationChannel();
+    }
+
+
+    // инициализация канала нотификаций
+    private void initNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel("2", "name", importance);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void setSettings() {
@@ -107,5 +163,11 @@ public class MainActivity extends AppCompatActivity {
             navigationView.setCheckedItem(R.id.nav_home);
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkStatusReceiver);
     }
 }
