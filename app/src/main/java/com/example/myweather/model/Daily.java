@@ -3,7 +3,7 @@ package com.example.myweather.model;
 public class Daily {
     private long dt;
     private Temp temp;
-    private int pressure;
+    private float pressure;
     private int humidity;
     private float wind_speed;
     private Weather[] weather;
@@ -48,11 +48,11 @@ public class Daily {
         this.wind_speed = wind_speed;
     }
 
-    public int getPressure() {
+    public float getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(float pressure) {
         this.pressure = pressure;
     }
 }
