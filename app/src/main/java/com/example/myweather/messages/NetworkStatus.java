@@ -1,11 +1,9 @@
-package com.example.myweather.Messages;
+package com.example.myweather.messages;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 import androidx.core.app.NotificationCompat;
 

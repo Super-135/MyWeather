@@ -1,4 +1,4 @@
-package com.example.myweather.Messages;
+package com.example.myweather.messages;
 
 import android.app.NotificationManager;
 import android.content.Context;

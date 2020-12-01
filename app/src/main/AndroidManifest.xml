@@ -29,14 +29,14 @@
         </activity>
 
         <receiver
-            android:name=".Messages.NetworkStatus"
+            android:name=".messages.NetworkStatus"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".Messages.MyFirebaseMessagingService">
+        <service android:name=".messages.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
